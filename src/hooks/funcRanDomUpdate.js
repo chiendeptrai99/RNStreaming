@@ -7,20 +7,19 @@ import {
      randomNumberLength,
      randomKeyValue
 } from '../randomFunc';
-let objectUpdate = {}
-function onChangeDataUpdate(objectRealtime, setListData, dic) {
-     const newListData = dic.current.listData.map(el => {
-          if (el.order_id === objectRealtime.order_id) {
-               return objectRealtime
+let objDataUpdate = {}
+function onChangeDataInsett(objectRealtime, setListData, dic) {
+     return useEffect(() => {
+          if (dic.current.init) {
+               dic.current.init = false
           } else {
-               return el
+               dic.current.listData.push(objectRealtime)
+               setListData(dic.current.listData)
           }
-     })
-     dic.current.listData = newListData
-     setListData(newListData)
+
+     }, [objectRealtime])
 }
-function useRandomUpdate({ dic, setListData }) {
-     useEffect(() => {
+function funcRandomUpdate({dic,}) {
           const sideArray = ['buy', 'sell'];
           const arrayClass = ['EQT', 'MF', 'ETF', 'WAR', 'FUT', 'OPT', 'IND', 'FX'];
           const fillStatus = ['Unfilled', 'Partially Filled', 'Filled'];
@@ -34,8 +33,9 @@ function useRandomUpdate({ dic, setListData }) {
                'FAILED',
           ];
           setTimeout(() => {
-               const randomSetInterval = setInterval(() => {
+                setInterval(() => {
                     const itemRandom = dic.current.listData[Math.floor(Math.random() * dic.current.listData.length)];
+                    // console.log('DCM newObject1', itemRandom)
                     const newObject = {
                          ...itemRandom, side: randomObject(sideArray),
                          filled_quantity: randomInteger(1000, 1),
@@ -46,12 +46,12 @@ function useRandomUpdate({ dic, setListData }) {
                          limit_price: randomNumber(100, 0).toFixed(2),
                          updated: randomNumberLength(9),
                     }
-                    objectUpdate = { ...newObject }
-                    onChangeDataUpdate(objectUpdate, setListData, dic)
-               }, 1000);
-          }, 2 * 1000);
+                    // console.log('DCM newObject', newObject)
+                    setRandomOrderValueUpdate(newObject);
+               }, 10000);
+          }, 5000);
           return () => {
           };
-     }, []);
+     return randomValueUpdate
 }
-export default useRandomUpdate;
+export default funcRandomUpdate;

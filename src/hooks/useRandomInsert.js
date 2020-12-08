@@ -7,10 +7,15 @@ import {
      randomNumberLength,
      randomKeyValue
 } from '../randomFunc';
-let dataObjectInsert = []
-
-function useRandomInsert() {
-     const [randomValueInsert, setRandomOrderValueInsert] = useState({});
+function onChangeDataInsett(objectRealtime, setListData, dic) {
+     if (dic.current.init) {
+          dic.current.init = false
+     } else {
+          dic.current.listData.push(objectRealtime)
+          setListData([...dic.current.listData])
+     }
+}
+function useRandomInsert({ dic, setListData }) {
      useEffect(() => {
           const sideArray = ['buy', 'sell'];
           const arrayClass = ['EQT', 'MF', 'ETF', 'WAR', 'FUT', 'OPT', 'IND', 'FX'];
@@ -26,26 +31,25 @@ function useRandomInsert() {
           ];
           setTimeout(() => {
                const randomSetInterval = setInterval(() => {
-                    setRandomOrderValueInsert({
-                         order_id: randomNumberLength(15),
-                         symbol: randomDisPlayName(),
-                         classSymbol: randomObject(arrayClass),
-                         side: randomObject(sideArray),
-                         filled_quantity: randomInteger(1000, 1),
-                         fill_status: randomObject(fillStatus),
-                         order_quantity: randomInteger(100000, 1),
-                         action_status: randomObject(actionStatus),
-                         order_action: randomObject(orderAction),
-                         limit_price: randomNumber(100, 0).toFixed(2),
-                         updated: randomNumberLength(9),
-                    });
-               }, 10 * 1000);
+                    const objDataInsert = {}
+                    objDataInsert.order_id = randomNumberLength(15);
+                    objDataInsert.symbol = randomDisPlayName();
+                    objDataInsert.classSymbol = randomObject(arrayClass);
+                    objDataInsert.side = randomObject(sideArray);
+                    objDataInsert.filled_quantity = randomInteger(1000, 1);
+                    objDataInsert.fill_status = randomObject(fillStatus);
+                    objDataInsert.order_quantity = randomInteger(100000, 1);
+                    objDataInsert.action_status = randomObject(actionStatus);
+                    objDataInsert.order_action = randomObject(orderAction);
+                    objDataInsert.limit_price = randomNumber(100, 0).toFixed(2);
+                    objDataInsert.updated = randomNumberLength(9);
+                    onChangeDataInsett(objDataInsert, setListData, dic);
+               }, 5 * 1000);
           }, 2 * 1000);
           return () => {
                clearInterval(randomSetInterval);
           };
 
      }, []);
-     return randomValueInsert
 }
 export default useRandomInsert;

@@ -59,10 +59,10 @@ const Active = () => {
      const [listData, setListData] = useState([test])
      const dic = useRef({ listData: [], init: true })
      dic.current.listData = listData
-     const dataObjectInsert = useRandomInsert();
-     const randomValueUpdate = useRandomUpdate(dic)
-     onChangeDataInsett(dataObjectInsert, setListData, dic)
-     onChangeDataUpdate(randomValueUpdate, setListData, dic)
+     useRandomInsert({ dic, setListData });
+     useRandomUpdate({ dic, setListData })
+     console.log('re render')
+
      return (
           <View
                style={{

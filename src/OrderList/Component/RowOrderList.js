@@ -13,8 +13,6 @@ const RowOrderList = ({ item, index }) => {
     action_status,
     order_action,
   } = item;
-  // console.log(item, 'data');
-
   const { text, color } = getSymbolClass({ classSymbol });
   const getColorOrder = () => {
     let colorOrder = '';
@@ -32,7 +30,6 @@ const RowOrderList = ({ item, index }) => {
       return (colorOrder = 'red');
     }
   };
-  // console.log(getColorOrder());
   return (
     <View style={styles.container}>
       <View style={{ marginLeft: 8 }}>
