@@ -10,8 +10,7 @@ import {
 let dataObjectInsert = []
 
 function useRandomInsert() {
-
-     const [randomValueInsert, setRandomOrderValueInsert] = useState([]);
+     const [randomValueInsert, setRandomOrderValueInsert] = useState({});
      useEffect(() => {
           const sideArray = ['buy', 'sell'];
           const arrayClass = ['EQT', 'MF', 'ETF', 'WAR', 'FUT', 'OPT', 'IND', 'FX'];
@@ -25,11 +24,11 @@ function useRandomInsert() {
                'DENIED',
                'FAILED',
           ];
-          const randomSetInterval = setInterval(() => {
-               setRandomOrderValueInsert([
-                    {
+          setTimeout(() => {
+               const randomSetInterval = setInterval(() => {
+                    setRandomOrderValueInsert({
                          order_id: randomNumberLength(15),
-                         displayName: randomDisPlayName(),
+                         symbol: randomDisPlayName(),
                          classSymbol: randomObject(arrayClass),
                          side: randomObject(sideArray),
                          filled_quantity: randomInteger(1000, 1),
@@ -39,23 +38,14 @@ function useRandomInsert() {
                          order_action: randomObject(orderAction),
                          limit_price: randomNumber(100, 0).toFixed(2),
                          updated: randomNumberLength(9),
-                    },]
-               );
-          }, 5000);
+                    });
+               }, 10 * 1000);
+          }, 2 * 1000);
           return () => {
-               clearInterval(randomSetInterval, randomOrderIdInterval);
-
+               clearInterval(randomSetInterval);
           };
 
      }, []);
-     randomValueInsert.map((item, index, data) => {
-          dataObjectInsert.push(item)
-
-     })
-
-
-
-     // console.log(dataObjectInsert, 'Fuck')
-     return dataObjectInsert
+     return randomValueInsert
 }
 export default useRandomInsert;

@@ -10,9 +10,9 @@ import {
 let dataList = []
 import useRandomInsert from '../hooks/useRandomInsert';
 let dataObjectUpdate = []
-function useRandomUpdate() {
-     const dataObjectInsert = useRandomInsert()
-     const [randomValueUpdate, setRandomOrderValueUpdate] = useState([]);
+function useRandomUpdate(dic) {
+     const [randomValueUpdate, setRandomOrderValueUpdate] = useState({});
+     console.log('DCM sub update')
      useEffect(() => {
           const sideArray = ['buy', 'sell'];
           const arrayClass = ['EQT', 'MF', 'ETF', 'WAR', 'FUT', 'OPT', 'IND', 'FX'];
@@ -26,13 +26,12 @@ function useRandomUpdate() {
                'DENIED',
                'FAILED',
           ];
-          const randomSetInterval = setInterval(() => {
-               setRandomOrderValueUpdate([
-                    {
-                         order_id: randomNumberLength(15),
-                         displayName: randomDisPlayName(),
-                         classSymbol: randomObject(arrayClass),
-                         side: randomObject(sideArray),
+          setTimeout(() => {
+               const randomSetInterval = setInterval(() => {
+                    const itemRandom = dic.current.listData[Math.floor(Math.random() * dic.current.listData.length)];
+                    console.log('DCM newObject1', itemRandom)
+                    const newObject = {
+                         ...itemRandom, side: randomObject(sideArray),
                          filled_quantity: randomInteger(1000, 1),
                          fill_status: randomObject(fillStatus),
                          order_quantity: randomInteger(100000, 1),
@@ -40,20 +39,14 @@ function useRandomUpdate() {
                          order_action: randomObject(orderAction),
                          limit_price: randomNumber(100, 0).toFixed(2),
                          updated: randomNumberLength(9),
-                    },]
-               );
-          }, 10000);
+                    }
+                    console.log('DCM newObject', newObject)
+                    setRandomOrderValueUpdate(newObject);
+               }, 1000);
+          }, 2 * 1000);
           return () => {
-               clearInterval(randomSetInterval);
-
           };
-
      }, []);
-
-
-
-
-
-     return { randomValueUpdate }
+     return randomValueUpdate
 }
 export default useRandomUpdate;

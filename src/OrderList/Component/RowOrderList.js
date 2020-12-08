@@ -6,7 +6,7 @@ const RowOrderList = ({ item, index }) => {
   const {
     side,
     fill_status,
-    displayName,
+    symbol,
     classSymbol,
     filled_quantity,
     limit_price,
@@ -44,7 +44,7 @@ const RowOrderList = ({ item, index }) => {
       <View>
         <View
           style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 8 }}>
-          <Text style={{ color: 'white', fontSize: 12 }}>{displayName}</Text>
+          <Text style={{ color: 'white', fontSize: 12 }}>{symbol}</Text>
           <View
             style={{
               borderRadius: 70,
