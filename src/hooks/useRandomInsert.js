@@ -29,6 +29,7 @@ function useRandomInsert({ dic, setListData }) {
                'DENIED',
                'FAILED',
           ];
+          const orderTag = ['active', 'executed', 'inactive']
           setTimeout(() => {
                const randomSetInterval = setInterval(() => {
                     const objDataInsert = {}
@@ -43,7 +44,9 @@ function useRandomInsert({ dic, setListData }) {
                     objDataInsert.order_action = randomObject(orderAction);
                     objDataInsert.limit_price = randomNumber(100, 0).toFixed(2);
                     objDataInsert.updated = randomNumberLength(9);
+                    objDataInsert.order_tag = randomObject(orderTag)
                     onChangeDataInsett(objDataInsert, setListData, dic);
+                  
                }, 5 * 1000);
           }, 2 * 1000);
           return () => {

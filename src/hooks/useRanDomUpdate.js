@@ -25,14 +25,8 @@ function useRandomUpdate({ dic, setListData }) {
           const arrayClass = ['EQT', 'MF', 'ETF', 'WAR', 'FUT', 'OPT', 'IND', 'FX'];
           const fillStatus = ['Unfilled', 'Partially Filled', 'Filled'];
           const actionStatus = ['Create', 'Amend', 'Cancel', 'Purge'];
-          const orderAction = [
-               'OK',
-               'AUTHORISING',
-               'PENDING',
-               'QUEUED',
-               'DENIED',
-               'FAILED',
-          ];
+          const orderAction = ['OK', 'AUTHORISING', 'PENDING', 'QUEUED', 'DENIED', 'FAILED',];
+          const orderTag = ['active', 'executed', 'inactive']
           setTimeout(() => {
                const randomSetInterval = setInterval(() => {
                     const itemRandom = dic.current.listData[Math.floor(Math.random() * dic.current.listData.length)];
@@ -45,10 +39,11 @@ function useRandomUpdate({ dic, setListData }) {
                          order_action: randomObject(orderAction),
                          limit_price: randomNumber(100, 0).toFixed(2),
                          updated: randomNumberLength(9),
+                         order_tag: randomObject(orderTag)
                     }
                     objectUpdate = { ...newObject }
                     onChangeDataUpdate(objectUpdate, setListData, dic)
-               }, 1000);
+               }, 10000);
           }, 2 * 1000);
           return () => {
           };

@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { getSymbolClass } from '../../getClassSymbol';
 
 const RowOrderList = ({ item, index }) => {
@@ -13,6 +13,8 @@ const RowOrderList = ({ item, index }) => {
     action_status,
     order_action,
   } = item;
+  // console.log('re render row order list', item.symbol)
+
   const { text, color } = getSymbolClass({ classSymbol });
   const getColorOrder = () => {
     let colorOrder = '';
@@ -30,8 +32,9 @@ const RowOrderList = ({ item, index }) => {
       return (colorOrder = 'red');
     }
   };
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View style={{ marginLeft: 8 }}>
         <Text style={{ color: side == 'buy' ? 'green' : 'red', fontSize: 12 }}>
           {side == 'buy' ? 'Buy' : 'Sell'}
@@ -110,11 +113,11 @@ const RowOrderList = ({ item, index }) => {
           {order_action}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
-export default RowOrderList;
+export default React.memo(RowOrderList);
 
 const styles = StyleSheet.create({
   container: {
